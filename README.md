@@ -1,2 +1,1 @@
-# Stanford_CS231N_Final_Project
-Retinal Disease Classification Using Deep Learning Method
+# Diabetic_Retinopathy_Progression_Recognition_Using_Deep_Learning_Method
