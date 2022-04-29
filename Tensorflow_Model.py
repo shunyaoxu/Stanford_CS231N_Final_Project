@@ -23,21 +23,21 @@ all_label = []
 
 filenames = [f for f in listdir(d0)]
 for fn in filenames:
-    img = cv2.imread(d0 + filenames[i])
+    img = cv2.imread(d0 + fn)
     res = cv2.resize(img, dsize=(800, 800), interpolation = cv2.INTER_AREA).reshape(1, 800, 800, 3)
     all_data.append(res)
     all_label.append(0)
     
 filenames = [f for f in listdir(d1)]
 for fn in filenames:
-    img = cv2.imread(d1 + filenames[i])
+    img = cv2.imread(d1 + fn)
     res = cv2.resize(img, dsize=(800, 800), interpolation = cv2.INTER_AREA).reshape(1, 800, 800, 3)
     all_data.append(res)
     all_label.append(1)
 
 filenames = [f for f in listdir(d2)]
 for fn in filenames:
-    img = cv2.imread(d2 + filenames[i])
+    img = cv2.imread(d2 + fn)
     res = cv2.resize(img, dsize=(800, 800), interpolation = cv2.INTER_AREA).reshape(1, 800, 800, 3)
     all_data.append(res)
     all_label.append(2)
