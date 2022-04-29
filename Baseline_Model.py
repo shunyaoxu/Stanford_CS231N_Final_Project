@@ -24,7 +24,7 @@ else:
     device = torch.device('cpu')
 
 # Constant to control how frequently we print train loss.
-print_every = 200
+print_every = 100
 print('using device:', device)
 
 
@@ -36,7 +36,7 @@ data_transforms = T.Compose([
                     #T.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
                     ])
 image_datasets = dset.ImageFolder(root=PATH_OF_DATA, transform=data_transforms)
-dataloaders = torch.utils.data.DataLoader(image_datasets, batch_size=32, shuffle=True, num_workers=2)
+dataloaders = torch.utils.data.DataLoader(image_datasets, batch_size=64, shuffle=True, num_workers=2)
 
 #Split data into training, validation and test with proportion 8:1:1
 total_size = len(image_datasets)
