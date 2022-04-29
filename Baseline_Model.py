@@ -24,7 +24,7 @@ else:
     device = torch.device('cpu')
 
 # Constant to control how frequently we print train loss.
-print_every = 200
+print_every = 3
 print('using device:', device)
 
 
@@ -36,7 +36,7 @@ data_transforms = T.Compose([
                     #T.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
                     ])
 image_datasets = dset.ImageFolder(root=PATH_OF_DATA, transform=data_transforms)
-dataloaders = torch.utils.data.DataLoader(image_datasets, batch_size=32, shuffle=True, num_workers=2)
+dataloaders = torch.utils.data.DataLoader(image_datasets, batch_size=1, shuffle=True, num_workers=2)
 
 #Split data into training, validation and test with proportion 8:1:1
 total_size = len(image_datasets)
@@ -46,9 +46,9 @@ test_size = total_size - training_size - validation_size
 training, validation, test = torch.utils.data.random_split(image_datasets, [training_size, validation_size, test_size])
 
 #Load data with dataloaders, define batch_size here
-trainingLoaders = torch.utils.data.DataLoader(training, batch_size=1, shuffle=True)
-validationLoaders = torch.utils.data.DataLoader(validation, batch_size=1, shuffle=True)
-testLoaders = torch.utils.data.DataLoader(test, batch_size=1, shuffle=True)
+trainingLoaders = torch.utils.data.DataLoader(training, batch_size=128, shuffle=True)
+validationLoaders = torch.utils.data.DataLoader(validation, batch_size=128, shuffle=True)
+testLoaders = torch.utils.data.DataLoader(test, batch_size=128, shuffle=True)
 print("Training Data Length: ", len(training))
 print("Validation Data Length: ", len(validation))
 print("Test Data Length: ", len(test))
