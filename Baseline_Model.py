@@ -120,7 +120,7 @@ class Flatten(nn.Module):
     def forward(self, x):
         return flatten(x)
 
-conv1_faster = None
+model = None
 optimizer = None
 
 C = 5
@@ -129,44 +129,45 @@ in1, in2, in3 = 3, 16, 32
 f1, f2, f3 = 3, 3, 3
 
 #input: 3 x 1200 x 1200
-conv1_faster = nn.Sequential(
-    nn.Conv2d(3, 16, kernel_size=3, padding=1),
-    nn.BatchNorm2d(16),
+conv1 = nn.Sequential(
+    nn.Conv2d(in1, out1, kernel_size=f1, padding=1),
+    nn.BatchNorm2d(out1),
     nn.ReLU(),           # Out: 1200 x 1200 x 16
-    nn.MaxPool2d(4)      # Out: 300 x 300 x 16
+    nn.MaxPool2d(2)      # Out: 600 x 600 x 16
 )
 
-#input: 300 x 300 x 16
-conv2_faster = nn.Sequential(
-    nn.Conv2d(16, 32, kernel_size=3, padding=1),
-    nn.BatchNorm2d(32),
-    nn.ReLU(),           # Out: 300 x 300 x 32
-    nn.MaxPool2d(2)      # Out: 150 x 150 x 32 
+#input: 600 x 600 x 16
+conv2 = nn.Sequential(
+    nn.Conv2d(in2, out2, kernel_size=f2, padding=1),
+    nn.BatchNorm2d(out2),
+    nn.ReLU(),           # Out: 600 x 600 x 32
+    nn.MaxPool2d(2)      # Out: 300 x 300 x 32 
 )
 
-conv3_faster = nn.Sequential(
-    nn.Conv2d(32, 64, kernel_size=3, padding=1),
-    nn.BatchNorm2d(64),
-    nn.ReLU(),           # Out: 150 x 150 x 64
-    nn.MaxPool2d(2)      # Out: 75 x 75 x 64 
-)
+#input: 300 x 300 x 32   
+conv3 = nn.Sequential(
+    nn.Conv2d(in3, out3, kernel_size=f3, padding=1),
+    nn.BatchNorm2d(out3),
+    nn.ReLU(),           # Out: 300 x 300 x 64
+    nn.MaxPool2d(2)      # Out: 150 x 150 x 64
+)   
 
-fc_faster =  nn.Sequential(
+fc =  nn.Sequential(
     nn.Dropout(0.4, inplace=True),
-    nn.Linear(64*75*75, C)
+    nn.Linear(64*150*150, C)
 )
 
-model_faster = nn.Sequential(
-    conv1_faster,
-    conv2_faster,
-    conv3_faster,
+model = nn.Sequential(
+    conv1,
+    conv2,
+    conv3,
     Flatten(),
-    fc_faster,
+    fc,
 )
 
 learning_rate = 0.001
-optimizer = optim.Adam(model_faster.parameters(), lr=learning_rate)
+optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
-train_part34(model_faster, optimizer, epochs=1)
+train_part34(model, optimizer, epochs=1)
 
-check_accuracy_part34(tqdm(testLoaders), model_faster)
+check_accuracy_part34(tqdm(testLoaders), model)
