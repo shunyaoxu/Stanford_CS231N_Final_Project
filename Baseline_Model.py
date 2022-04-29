@@ -31,7 +31,7 @@ print('using device:', device)
 ##############Load Dataset##############
 PATH_OF_DATA = '/home/ubuntu/dataset/'
 data_transforms = T.Compose([
-                    T.CenterCrop(1200),
+                    T.CenterCrop(1000),
                     T.ToTensor(),
                     #T.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
                     ])
