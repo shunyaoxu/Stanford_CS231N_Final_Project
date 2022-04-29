@@ -120,7 +120,7 @@ class Flatten(nn.Module):
     def forward(self, x):
         return flatten(x)
 
-model = None
+conv1_faster = None
 optimizer = None
 
 C = 5
@@ -164,9 +164,8 @@ model_faster = nn.Sequential(
     fc_faster,
 )
 
-learning_rate = 1e-2
-optimizer = optim.SGD(model_faster.parameters(), lr=learning_rate,
-                      momentum=0.9, nesterov=True)
+learning_rate = 0.001
+optimizer = optim.Adam(model_faster.parameters(), lr=learning_rate)
 
 train_part34(model_faster, optimizer, epochs=1)
 
