@@ -165,9 +165,9 @@ model_faster = nn.Sequential(
 )
 
 learning_rate = 1e-2
-optimizer = optim.SGD(model.parameters(), lr=learning_rate,
-                     momentum=0.9, nesterov=True)
+optimizer = optim.SGD(model_faster.parameters(), lr=learning_rate,
+                      momentum=0.9, nesterov=True)
 
-train_part34(model, optimizer, epochs=1)
+train_part34(model_faster, optimizer, epochs=1)
 
-check_accuracy_part34(tqdm(testLoaders), model)
+check_accuracy_part34(tqdm(testLoaders), model_faster)
