@@ -27,7 +27,7 @@ def seed_everything(seed=0):
     os.environ['PYTHONHASHSEED'] = str(seed)
     np.random.seed(seed)
     tf.random.set_seed(0)
-seed_everything()
+#seed_everything()
 
 sns.set(style="whitegrid")
 warnings.filterwarnings("ignore")
