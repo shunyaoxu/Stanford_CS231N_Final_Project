@@ -12,7 +12,7 @@ from sklearn.metrics import confusion_matrix, cohen_kappa_score
 #import tensorflow.keras as keras
 from tensorflow import keras
 from keras import backend as K
-from keras.models import Model
+from tensorflow.keras.models import Model
 from keras import optimizers, applications
 from keras.preprocessing.image import ImageDataGenerator
 from keras.callbacks import EarlyStopping, ReduceLROnPlateau, Callback
