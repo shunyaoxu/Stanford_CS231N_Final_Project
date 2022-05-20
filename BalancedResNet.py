@@ -20,7 +20,7 @@ from tensorflow.keras.applications.resnet50 import ResNet50
 
 # Set seeds to make the experiment more reproducible.
 import tensorflow as tf
-import tensorflow_datasets as tfds
+#import tensorflow_datasets as tfds
 
 def seed_everything(seed=0):
     random.seed(seed)
