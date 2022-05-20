@@ -29,7 +29,6 @@ def seed_everything(seed=0):
     tf.random.set_seed(0)
 seed_everything()
 
-%matplotlib inline
 sns.set(style="whitegrid")
 warnings.filterwarnings("ignore")
 
