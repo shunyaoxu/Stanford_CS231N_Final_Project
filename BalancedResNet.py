@@ -15,7 +15,7 @@ from keras.models import Model
 from keras import optimizers, applications
 from keras.preprocessing.image import ImageDataGenerator
 from keras.callbacks import EarlyStopping, ReduceLROnPlateau, Callback
-from keras.layers import Dense, Dropout, GlobalAveragePooling2D, Input
+from tensorflow.keras.layers import Dense, Dropout, GlobalAveragePooling2D, Input
 from tensorflow.keras.applications.resnet50 import ResNet50
 
 # Set seeds to make the experiment more reproducible.
