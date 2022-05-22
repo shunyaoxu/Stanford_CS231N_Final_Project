@@ -171,7 +171,7 @@ def train_model(model, optimizer, loader, epochs=1):
         for t, (imgs, labels) in enumerate(loader):
             model.train()  # put model to training mode
             imgs = imgs.to(device=device, dtype=dtype)  # move to device, e.g. GPU
-            labels = labels.to(device=device, dtype=dtype)
+            labels = labels.to(device=device, dtype=torch.int64)
 
             scores = model(imgs)
             loss = F.cross_entropy(scores, labels)
