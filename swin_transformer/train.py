@@ -170,7 +170,7 @@ def train_model(model, optimizer, loader, epochs=1):
     """
     model = model.to(device=device)  # move the model parameters to CPU/GPU
     for e in range(epochs):
-        for t, (imgs, labels) in enumerate(tqdm(loader)):
+        for t, (imgs, labels) in enumerate(loader):
             model.train()  # put model to training mode
             imgs = imgs.to(device=device, dtype=dtype)  # move to device, e.g. GPU
             labels = labels.to(device=device, dtype=torch.int64)
@@ -188,8 +188,8 @@ def train_model(model, optimizer, loader, epochs=1):
 
         print('Epoch %d, loss = %.4f' % (e, loss.item()))
         history["train_loss"].append(loss.item())
-        check_accuracy(tqdm(trainLoader), model, True, False, False)
-        check_accuracy(tqdm(valLoader), model, False, True, False)
+        check_accuracy(trainLoader, model, True, False, False)
+        check_accuracy(valLoader, model, False, True, False)
         print()
 
 #%% plot
@@ -251,6 +251,6 @@ if __name__ == '__main__':
     model = swin_t()
     optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.lr)
     train_model(model, optimizer, trainLoader, epochs=args.epochs)
-    check_accuracy(tqdm(testLoader), model, False, False, True)
+    check_accuracy(testLoader, model, False, False, True)
     plotAcc(modeltype="swin-T")
     plotLoss(modeltype="swin-T")
