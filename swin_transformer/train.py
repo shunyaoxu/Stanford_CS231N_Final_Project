@@ -183,8 +183,8 @@ def train_model(model, optimizer, loader, epochs=1):
             
             optimizer.step()
             
-            if t % 100 == 0:
-                print('Iteration %d, loss = %.4f' % (t, loss.item()))
+            #if t % 100 == 0:
+            #    print('Iteration %d, loss = %.4f' % (t, loss.item()))
 
         print('Epoch %d, loss = %.4f' % (e, loss.item()))
         history["train_loss"].append(loss.item())
