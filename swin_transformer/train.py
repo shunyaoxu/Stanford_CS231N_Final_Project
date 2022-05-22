@@ -45,7 +45,7 @@ print('using device:', device)
 #%% Load Data
 
 #Split data into training, validation and test with proportion 8:1:1
-PATH_OF_DATA = '/home/ubuntu/dataset/'
+PATH_OF_DATA = '/home/users/shunyaox/dataset/data/'
 data_transforms = T.Compose([
                     T.CenterCrop(1120),
                     T.ToTensor(),
@@ -96,7 +96,7 @@ def check_accuracy(loader, model, train=True, val=False, test=False):
     with torch.no_grad():
         for imgs, labels in loader:
             imgs = imgs.to(device=device, dtype=dtype)  # move to device, e.g. GPU
-            labels = labels.to(device=device, dtype=dtype)
+            labels = labels.to(device=device, dtype=torch.int64)
             
             scores = model(imgs)
             _, preds = scores.max(1)
