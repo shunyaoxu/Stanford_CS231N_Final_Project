@@ -1,13 +1,13 @@
 import os
 
-files = os.listdir('/home/ubuntu/dataset/0')
+files = os.listdir('/home/users/shunyaox/dataset/data/0')
 for file in files[1000:]:
-    os.remove('/home/ubuntu/dataset/0/' + file)
+    os.remove('/home/users/shunyaox/dataset/data/0/' + file)
     
-files = os.listdir('/home/ubuntu/dataset/1')
+files = os.listdir('/home/users/shunyaox/dataset/data/1')
 for file in files[1000:]:
-    os.remove('/home/ubuntu/dataset/1/' + file)
+    os.remove('/home/users/shunyaox/dataset/data/1/' + file)
     
-files = os.listdir('/home/ubuntu/dataset/2')
+files = os.listdir('/home/users/shunyaox/dataset/data/2')
 for file in files[1000:]:
-    os.remove('/home/ubuntu/dataset/2/' + file)
+    os.remove('/home/users/shunyaox/dataset/data/2/' + file)
