@@ -45,7 +45,7 @@ print('using device:', device)
 #%% Load Data
 
 #Split data into training, validation and test with proportion 8:1:1
-PATH_OF_DATA = '/home/users/shunyaox/dataset/data/'
+PATH_OF_DATA = '/home/ubuntu/dataset/'
 data_transforms = T.Compose([
                     T.CenterCrop(1120),
                     T.ToTensor(),
