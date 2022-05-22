@@ -58,9 +58,9 @@ def kappa(y_true, y_pred, n_classes=5):
 
     return kappa_score
 
-train_dir = '/home/ubuntu/dataset/outputs/train'
-val_dir = '/home/ubuntu/dataset/outputs/val'
-test_dir = '/home/ubuntu/dataset/outputs/test'
+train_dir = '/home/ubuntu/dataset_test/outputs_exp/train'
+val_dir = '/home/ubuntu/dataset_test/outputs_exp/val'
+test_dir = '/home/ubuntu/dataset_test/outputs_exp/test'
 train_datagen=ImageDataGenerator(rescale=1./255, 
                                  horizontal_flip=True,
                                  vertical_flip=True)
@@ -151,6 +151,7 @@ history_finetunning = model.fit_generator(generator=train_generator,
                                           callbacks=callback_list,
                                           class_weight=class_weights,
                                           verbose=1).history
+model.save('/home/ubuntu/models/my_resnet_model.h5')
 
 history = {'loss': history_warmup['loss'] + history_finetunning['loss'], 
            'val_loss': history_warmup['val_loss'] + history_finetunning['val_loss'], 
