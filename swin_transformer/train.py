@@ -11,6 +11,7 @@ from torch.utils.data import TensorDataset, DataLoader
 from torch.utils.data import sampler
 from sklearn.model_selection import train_test_split
 from os import listdir
+from tqdm import tqdm
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import matplotlib as mpl
@@ -48,6 +49,7 @@ print('using device:', device)
 PATH_OF_DATA = '/home/users/shunyaox/dataset/data/'
 data_transforms = T.Compose([
                     T.CenterCrop(1120),
+                    T.Resize((448, 448)),
                     T.ToTensor(),
                     ])
 image_datasets = dset.ImageFolder(root=PATH_OF_DATA, transform=data_transforms)
@@ -168,7 +170,7 @@ def train_model(model, optimizer, loader, epochs=1):
     """
     model = model.to(device=device)  # move the model parameters to CPU/GPU
     for e in range(epochs):
-        for t, (imgs, labels) in enumerate(loader):
+        for t, (imgs, labels) in enumerate(tqdm(loader)):
             model.train()  # put model to training mode
             imgs = imgs.to(device=device, dtype=dtype)  # move to device, e.g. GPU
             labels = labels.to(device=device, dtype=torch.int64)
@@ -180,11 +182,14 @@ def train_model(model, optimizer, loader, epochs=1):
             loss.backward()
             
             optimizer.step()
+            
+            if t % 100 == 0:
+                print('Iteration %d, loss = %.4f' % (t, loss.item()))
 
-        print('Iteration %d, loss = %.4f' % (e, loss.item()))
+        print('Epoch %d, loss = %.4f' % (e, loss.item()))
         history["train_loss"].append(loss.item())
-        check_accuracy(trainLoader, model, True, False, False)
-        check_accuracy(valLoader, model, False, True, False)
+        check_accuracy(tqdm(trainLoader), model, True, False, False)
+        check_accuracy(tqdm(valLoader), model, False, True, False)
         print()
 
 #%% plot
@@ -246,6 +251,6 @@ if __name__ == '__main__':
     model = swin_t()
     optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.lr)
     train_model(model, optimizer, trainLoader, epochs=args.epochs)
-    check_accuracy(testLoader, model, False, False, True)
+    check_accuracy(tqdm(testLoader), model, False, False, True)
     plotAcc(modeltype="swin-T")
     plotLoss(modeltype="swin-T")
