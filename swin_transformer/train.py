@@ -47,7 +47,7 @@ print('using device:', device)
 #Split data into training, validation and test with proportion 8:1:1
 PATH_OF_DATA = '/home/ubuntu/dataset/'
 data_transforms = T.Compose([
-                    T.CenterCrop(1200),
+                    T.CenterCrop(1120),
                     T.ToTensor(),
                     ])
 image_datasets = dset.ImageFolder(root=PATH_OF_DATA, transform=data_transforms)
