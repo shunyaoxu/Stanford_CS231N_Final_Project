@@ -114,7 +114,7 @@ class WindowAttention(nn.Module):
         dots = einsum('b h w i d, b h w j d -> b h w i j', q, k) * self.scale
 
         if self.relative_pos_embedding:
-            dots += self.pos_embedding[self.relative_indices[:, :, 0].long(), self.relative_indices[:, :, 1].long()]
+            dots += self.pos_embedding[self.relative_indices[:, :, 0], self.relative_indices[:, :, 1]]
         else:
             dots += self.pos_embedding
 
@@ -194,7 +194,7 @@ class StageModule(nn.Module):
 
 class SwinTransformer(nn.Module):
     def __init__(self, *, hidden_dim, layers, heads, channels=3, num_classes=1000, head_dim=32, window_size=7,
-                 downscaling_factors=(2, 2, 2, 2), relative_pos_embedding=True):
+                 downscaling_factors=(4, 2, 2, 2), relative_pos_embedding=True):
         super().__init__()
 
         self.stage1 = StageModule(in_channels=channels, hidden_dimension=hidden_dim, layers=layers[0],
@@ -214,25 +214,23 @@ class SwinTransformer(nn.Module):
             nn.LayerNorm(hidden_dim * 8),
             nn.Linear(hidden_dim * 8, num_classes)
         )
-        
-        #self.sigm = nn.Sigmoid()
 
     def forward(self, img):
-        x = self.stage1(img)      # in: (N, 64, 64, 64) out: (N, C, 16, 16)
-        x = self.stage2(x)        # in: (N, C, 16, 16)  out: (N, 2C, 8, 8)
-        x = self.stage3(x)        # in: (N, 2C, 8, 8)   out: (N, 4C, 4, 4)
-        x = self.stage4(x)        # in: (N, 4C, 4, 4)   out: (N, 8C, 2, 2)
-        x = x.mean(dim=[2, 3])    # in: (N, 8C, 2, 2)   out: (N, 8C)
-        return self.mlp_head(x)# in: (N, 8C) out: (N, num_classes)
+        x = self.stage1(img)
+        x = self.stage2(x)
+        x = self.stage3(x)
+        x = self.stage4(x)
+        x = x.mean(dim=[2, 3])
+        return self.mlp_head(x)
 
 #%% Callable Transformers
 # Swin_T Transformer
-def swin_t(hidden_dim=96, layers=(2, 2, 2, 2), heads=(3, 6, 12, 24), channels=64, num_classes=2, **kwargs):
-    return SwinTransformer(hidden_dim=hidden_dim, layers=layers, heads=heads, channels=channels, num_classes=num_classes, window_size=4, **kwargs)
+def swin_t(hidden_dim=96, layers=(2, 2, 6, 2), heads=(3, 6, 12, 24), num_classes=5, **kwargs):
+    return SwinTransformer(hidden_dim=hidden_dim, layers=layers, heads=heads, num_classes=num_classes, **kwargs)
 
 # Swin_S Transformer
-def swin_s(hidden_dim=96, layers=(2, 2, 18, 2), heads=(3, 6, 12, 24), channels=64, num_classes=2, **kwargs):
-    return SwinTransformer(hidden_dim=hidden_dim, layers=layers, heads=heads, channels=channels, num_classes=num_classes, window_size=4, **kwargs)
+def swin_s(hidden_dim=96, layers=(2, 2, 18, 2), heads=(3, 6, 12, 24), **kwargs):
+    return SwinTransformer(hidden_dim=hidden_dim, layers=layers, heads=heads, **kwargs)
 
 # Swin_b Transformer
 def swin_b(hidden_dim=128, layers=(2, 2, 18, 2), heads=(4, 8, 16, 32), **kwargs):
