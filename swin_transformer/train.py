@@ -48,7 +48,7 @@ print('using device:', device)
 #Split data into training, validation and test with proportion 8:1:1
 PATH_OF_DATA = '/home/users/shunyaox/dataset/data/'
 data_transforms = T.Compose([
-                    T.CenterCrop(1120),
+                    #T.CenterCrop(1120),
                     T.Resize((448, 448)),
                     T.ToTensor(),
                     ])
@@ -249,7 +249,7 @@ def plotLoss(modeltype="swin-T"):
 #%% main
 if __name__ == '__main__':
     model = swin_t()
-    optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.lr)
+    optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.lr_decay)
     train_model(model, optimizer, trainLoader, epochs=args.epochs)
     check_accuracy(testLoader, model, False, False, True)
     plotAcc(modeltype="swin-T")
