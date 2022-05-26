@@ -49,7 +49,7 @@ print('using device:', device)
 PATH_OF_DATA = '/home/users/shunyaox/dataset/data/'
 data_transforms = T.Compose([
                     #T.CenterCrop(1120),
-                    T.Resize((448, 448)),
+                    T.Resize((224, 224)),
                     T.ToTensor(),
                     ])
 image_datasets = dset.ImageFolder(root=PATH_OF_DATA, transform=data_transforms)
